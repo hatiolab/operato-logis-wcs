@@ -42,22 +42,22 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 	@Column (name = "stage_cd", length = 30)
 	private String stageCd;
 
-	@Column (name = "equip_type", nullable = false, length = 20)
+	@Column (name = "equip_type", length = 20)
 	private String equipType;
 
-	@Column (name = "equip_cd", nullable = false, length = 30)
+	@Column (name = "equip_cd", length = 30)
 	private String equipCd;
 
-	@Column (name = "station_cd", nullable = false, length = 30)
+	@Column (name = "station_cd", length = 30)
 	private String stationCd;
 
-	@Column (name = "worker_id", nullable = false, length = 32)
+	@Column (name = "worker_id", length = 32)
 	private String workerId;
 
-	@Column (name = "job_type", nullable = false, length = 20)
+	@Column (name = "job_type", length = 20)
 	private String jobType;
 
-	@Column (name = "batch_id", nullable = false, length = 40)
+	@Column (name = "batch_id", length = 40)
 	private String batchId;
 
 	@Column (name = "h01_result", length = 12)
