@@ -11,7 +11,7 @@ import xyz.elidom.dbist.annotation.Table;
 	@Index(name = "ix_productivity_1", columnList = "domain_id,job_date,job_hour"),
 	@Index(name = "ix_productivity_2", columnList = "domain_id,job_date,area_cd,stage_cd,equip_type,equip_cd")
 })
-public class Productivity extends xyz.elidom.orm.entity.basic.DomainTimeStamp {
+public class Productivity extends xyz.elidom.orm.entity.basic.DomainTimeStampHook {
 	/**
 	 * SerialVersion UID
 	 */
@@ -51,23 +51,23 @@ public class Productivity extends xyz.elidom.orm.entity.basic.DomainTimeStamp {
 	@Column (name = "job_hour", nullable = false, length = 2)
 	private String jobHour;
 
-	@Column (name = "min_result_10", length = 12)
-	private Integer minResult10;
+	@Column (name = "m10_result", length = 12)
+	private Integer m10Result;
 
-	@Column (name = "min_result_20", length = 12)
-	private Integer minResult20;
+	@Column (name = "m20_result", length = 12)
+	private Integer m20Result;
 
-	@Column (name = "min_result_30", length = 12)
-	private Integer minResult30;
+	@Column (name = "m30_result", length = 12)
+	private Integer m30Result;
 
-	@Column (name = "min_result_40", length = 12)
-	private Integer minResult40;
+	@Column (name = "m40_result", length = 12)
+	private Integer m40Result;
 
-	@Column (name = "min_result_50", length = 12)
-	private Integer minResult50;
+	@Column (name = "m50_result", length = 12)
+	private Integer m50Result;
 
-	@Column (name = "min_result_60", length = 12)
-	private Integer minResult60;
+	@Column (name = "m60_result", length = 12)
+	private Integer m60Result;
 	
 	@Column (name = "attr01", length = 40)
 	private String attr01;
@@ -172,52 +172,52 @@ public class Productivity extends xyz.elidom.orm.entity.basic.DomainTimeStamp {
 		this.jobHour = jobHour;
 	}
 
-	public Integer getMinResult10() {
-		return minResult10;
+	public Integer getM10Result() {
+		return m10Result;
 	}
 
-	public void setMinResult10(Integer minResult10) {
-		this.minResult10 = minResult10;
+	public void setM10Result(Integer m10Result) {
+		this.m10Result = m10Result;
 	}
 
-	public Integer getMinResult20() {
-		return minResult20;
+	public Integer getM20Result() {
+		return m20Result;
 	}
 
-	public void setMinResult20(Integer minResult20) {
-		this.minResult20 = minResult20;
+	public void setM20Result(Integer m20Result) {
+		this.m20Result = m20Result;
 	}
 
-	public Integer getMinResult30() {
-		return minResult30;
+	public Integer getM30Result() {
+		return m30Result;
 	}
 
-	public void setMinResult30(Integer minResult30) {
-		this.minResult30 = minResult30;
+	public void setM30Result(Integer m30Result) {
+		this.m30Result = m30Result;
 	}
 
-	public Integer getMinResult40() {
-		return minResult40;
+	public Integer getM40Result() {
+		return m40Result;
 	}
 
-	public void setMinResult40(Integer minResult40) {
-		this.minResult40 = minResult40;
+	public void setM40Result(Integer m40Result) {
+		this.m40Result = m40Result;
 	}
 
-	public Integer getMinResult50() {
-		return minResult50;
+	public Integer getM50Result() {
+		return m50Result;
 	}
 
-	public void setMinResult50(Integer minResult50) {
-		this.minResult50 = minResult50;
+	public void setM50Result(Integer m50Result) {
+		this.m50Result = m50Result;
 	}
 
-	public Integer getMinResult60() {
-		return minResult60;
+	public Integer getM60Result() {
+		return m60Result;
 	}
 
-	public void setMinResult60(Integer minResult60) {
-		this.minResult60 = minResult60;
+	public void setM60Result(Integer m60Result) {
+		this.m60Result = m60Result;
 	}
 
 	public String getAttr01() {

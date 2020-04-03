@@ -14,7 +14,7 @@ import xyz.elidom.dbist.annotation.Table;
 	@Index(name = "ix_daily_prod_summary_4", columnList = "domain_id,job_date,area_cd,worker_id,equip_type,equip_cd,job_type")
 
 })
-public class DailyProdSummary extends xyz.elidom.orm.entity.basic.ElidomStampHook {
+public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStampHook {
 	/**
 	 * SerialVersion UID
 	 */
@@ -60,77 +60,77 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.ElidomStampHoo
 	@Column (name = "batch_id", nullable = false, length = 40)
 	private String batchId;
 
-	@Column (name = "hr_result_01", length = 2)
-	private String hrResult01;
+	@Column (name = "h01_result", length = 12)
+	private String h01Result;
 
-	@Column (name = "hr_result_02", length = 12)
-	private Integer hrResult02;
+	@Column (name = "h02_result", length = 12)
+	private Integer h02Result;
 
-	@Column (name = "hr_result_03", length = 12)
-	private Integer hrResult03;
+	@Column (name = "h03_result", length = 12)
+	private Integer h03Result;
 
-	@Column (name = "hr_result_04", length = 12)
-	private Integer hrResult04;
+	@Column (name = "h04_result", length = 12)
+	private Integer h04Result;
 
-	@Column (name = "hr_result_05", length = 12)
-	private Integer hrResult05;
+	@Column (name = "h05_result", length = 12)
+	private Integer h05Result;
 
-	@Column (name = "hr_result_06", length = 12)
-	private Integer hrResult06;
+	@Column (name = "h06_result", length = 12)
+	private Integer h06Result;
 
-	@Column (name = "hr_result_07", length = 12)
-	private Integer hrResult07;
+	@Column (name = "h07_result", length = 12)
+	private Integer h07Result;
 
-	@Column (name = "hr_result_08", length = 12)
-	private Integer hrResult08;
+	@Column (name = "h08_result", length = 12)
+	private Integer h08Result;
 
-	@Column (name = "hr_result_09", length = 12)
-	private Integer hrResult09;
+	@Column (name = "h09_result", length = 12)
+	private Integer h09Result;
 
-	@Column (name = "hr_result_10", length = 12)
-	private Integer hrResult10;
+	@Column (name = "h10_result", length = 12)
+	private Integer h10Result;
 
-	@Column (name = "hr_result_11", length = 12)
-	private Integer hrResult11;
+	@Column (name = "h11_result", length = 12)
+	private Integer h11Result;
 
-	@Column (name = "hr_result_12", length = 12)
-	private Integer hrResult12;
+	@Column (name = "h12_result", length = 12)
+	private Integer h12Result;
 
-	@Column (name = "hr_result_13", length = 12)
-	private Integer hrResult13;
+	@Column (name = "h13_result", length = 12)
+	private Integer h13Result;
 
-	@Column (name = "hr_result_14", length = 12)
-	private Integer hrResult14;
+	@Column (name = "h14_result", length = 12)
+	private Integer h14Result;
 
-	@Column (name = "hr_result_15", length = 12)
-	private Integer hrResult15;
+	@Column (name = "h15_result", length = 12)
+	private Integer h15Result;
 
-	@Column (name = "hr_result_16", length = 12)
-	private Integer hrResult16;
+	@Column (name = "h16_result", length = 12)
+	private Integer h16Result;
 
-	@Column (name = "hr_result_17", length = 12)
-	private Integer hrResult17;
+	@Column (name = "h17_result", length = 12)
+	private Integer h17Result;
 
-	@Column (name = "hr_result_18", length = 12)
-	private Integer hrResult18;
+	@Column (name = "h18_result", length = 12)
+	private Integer h18Result;
 
-	@Column (name = "hr_result_19", length = 12)
-	private Integer hrResult19;
+	@Column (name = "h19_result", length = 12)
+	private Integer h19Result;
 
-	@Column (name = "hr_result_20", length = 12)
-	private Integer hrResult20;
+	@Column (name = "h20_result", length = 12)
+	private Integer h20Result;
 
-	@Column (name = "hr_result_21", length = 12)
-	private Integer hrResult21;
+	@Column (name = "h21_result", length = 12)
+	private Integer h21Result;
 
-	@Column (name = "hr_result_22", length = 12)
-	private Integer hrResult22;
+	@Column (name = "h22_result", length = 12)
+	private Integer h22Result;
 
-	@Column (name = "hr_result_23", length = 12)
-	private Integer hrResult23;
+	@Column (name = "h23_result", length = 12)
+	private Integer h23Result;
 
-	@Column (name = "hr_result_24", length = 12)
-	private Integer hrResult24;
+	@Column (name = "h24_result", length = 12)
+	private Integer h24Result;
 
 	@Column (name = "plan_qty", length = 12)
 	private Integer planQty;
@@ -262,197 +262,197 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.ElidomStampHoo
 	public void setBatchId(String batchId) {
 		this.batchId = batchId;
 	}
-
-	public String getHrResult01() {
-		return hrResult01;
+	
+	public String getH01Result() {
+		return h01Result;
 	}
 
-	public void setHrResult01(String hrResult01) {
-		this.hrResult01 = hrResult01;
+	public void setH01Result(String h01Result) {
+		this.h01Result = h01Result;
 	}
 
-	public Integer getHrResult02() {
-		return hrResult02;
+	public Integer getH02Result() {
+		return h02Result;
 	}
 
-	public void setHrResult02(Integer hrResult02) {
-		this.hrResult02 = hrResult02;
+	public void setH02Result(Integer h02Result) {
+		this.h02Result = h02Result;
 	}
 
-	public Integer getHrResult03() {
-		return hrResult03;
+	public Integer getH03Result() {
+		return h03Result;
 	}
 
-	public void setHrResult03(Integer hrResult03) {
-		this.hrResult03 = hrResult03;
+	public void setH03Result(Integer h03Result) {
+		this.h03Result = h03Result;
 	}
 
-	public Integer getHrResult04() {
-		return hrResult04;
+	public Integer getH04Result() {
+		return h04Result;
 	}
 
-	public void setHrResult04(Integer hrResult04) {
-		this.hrResult04 = hrResult04;
+	public void setH04Result(Integer h04Result) {
+		this.h04Result = h04Result;
 	}
 
-	public Integer getHrResult05() {
-		return hrResult05;
+	public Integer getH05Result() {
+		return h05Result;
 	}
 
-	public void setHrResult05(Integer hrResult05) {
-		this.hrResult05 = hrResult05;
+	public void setH05Result(Integer h05Result) {
+		this.h05Result = h05Result;
 	}
 
-	public Integer getHrResult06() {
-		return hrResult06;
+	public Integer getH06Result() {
+		return h06Result;
 	}
 
-	public void setHrResult06(Integer hrResult06) {
-		this.hrResult06 = hrResult06;
+	public void setH06Result(Integer h06Result) {
+		this.h06Result = h06Result;
 	}
 
-	public Integer getHrResult07() {
-		return hrResult07;
+	public Integer getH07Result() {
+		return h07Result;
 	}
 
-	public void setHrResult07(Integer hrResult07) {
-		this.hrResult07 = hrResult07;
+	public void setH07Result(Integer h07Result) {
+		this.h07Result = h07Result;
 	}
 
-	public Integer getHrResult08() {
-		return hrResult08;
+	public Integer getH08Result() {
+		return h08Result;
 	}
 
-	public void setHrResult08(Integer hrResult08) {
-		this.hrResult08 = hrResult08;
+	public void setH08Result(Integer h08Result) {
+		this.h08Result = h08Result;
 	}
 
-	public Integer getHrResult09() {
-		return hrResult09;
+	public Integer getH09Result() {
+		return h09Result;
 	}
 
-	public void setHrResult09(Integer hrResult09) {
-		this.hrResult09 = hrResult09;
+	public void setH09Result(Integer h09Result) {
+		this.h09Result = h09Result;
 	}
 
-	public Integer getHrResult10() {
-		return hrResult10;
+	public Integer getH10Result() {
+		return h10Result;
 	}
 
-	public void setHrResult10(Integer hrResult10) {
-		this.hrResult10 = hrResult10;
+	public void setH10Result(Integer h10Result) {
+		this.h10Result = h10Result;
 	}
 
-	public Integer getHrResult11() {
-		return hrResult11;
+	public Integer getH11Result() {
+		return h11Result;
 	}
 
-	public void setHrResult11(Integer hrResult11) {
-		this.hrResult11 = hrResult11;
+	public void setH11Result(Integer h11Result) {
+		this.h11Result = h11Result;
 	}
 
-	public Integer getHrResult12() {
-		return hrResult12;
+	public Integer getH12Result() {
+		return h12Result;
 	}
 
-	public void setHrResult12(Integer hrResult12) {
-		this.hrResult12 = hrResult12;
+	public void setH12Result(Integer h12Result) {
+		this.h12Result = h12Result;
 	}
 
-	public Integer getHrResult13() {
-		return hrResult13;
+	public Integer getH13Result() {
+		return h13Result;
 	}
 
-	public void setHrResult13(Integer hrResult13) {
-		this.hrResult13 = hrResult13;
+	public void setH13Result(Integer h13Result) {
+		this.h13Result = h13Result;
 	}
 
-	public Integer getHrResult14() {
-		return hrResult14;
+	public Integer getH14Result() {
+		return h14Result;
 	}
 
-	public void setHrResult14(Integer hrResult14) {
-		this.hrResult14 = hrResult14;
+	public void setH14Result(Integer h14Result) {
+		this.h14Result = h14Result;
 	}
 
-	public Integer getHrResult15() {
-		return hrResult15;
+	public Integer getH15Result() {
+		return h15Result;
 	}
 
-	public void setHrResult15(Integer hrResult15) {
-		this.hrResult15 = hrResult15;
+	public void setH15Result(Integer h15Result) {
+		this.h15Result = h15Result;
 	}
 
-	public Integer getHrResult16() {
-		return hrResult16;
+	public Integer getH16Result() {
+		return h16Result;
 	}
 
-	public void setHrResult16(Integer hrResult16) {
-		this.hrResult16 = hrResult16;
+	public void setH16Result(Integer h16Result) {
+		this.h16Result = h16Result;
 	}
 
-	public Integer getHrResult17() {
-		return hrResult17;
+	public Integer getH17Result() {
+		return h17Result;
 	}
 
-	public void setHrResult17(Integer hrResult17) {
-		this.hrResult17 = hrResult17;
+	public void setH17Result(Integer h17Result) {
+		this.h17Result = h17Result;
 	}
 
-	public Integer getHrResult18() {
-		return hrResult18;
+	public Integer getH18Result() {
+		return h18Result;
 	}
 
-	public void setHrResult18(Integer hrResult18) {
-		this.hrResult18 = hrResult18;
+	public void setH18Result(Integer h18Result) {
+		this.h18Result = h18Result;
 	}
 
-	public Integer getHrResult19() {
-		return hrResult19;
+	public Integer getH19Result() {
+		return h19Result;
 	}
 
-	public void setHrResult19(Integer hrResult19) {
-		this.hrResult19 = hrResult19;
+	public void setH19Result(Integer h19Result) {
+		this.h19Result = h19Result;
 	}
 
-	public Integer getHrResult20() {
-		return hrResult20;
+	public Integer getH20Result() {
+		return h20Result;
 	}
 
-	public void setHrResult20(Integer hrResult20) {
-		this.hrResult20 = hrResult20;
+	public void setH20Result(Integer h20Result) {
+		this.h20Result = h20Result;
 	}
 
-	public Integer getHrResult21() {
-		return hrResult21;
+	public Integer getH21Result() {
+		return h21Result;
 	}
 
-	public void setHrResult21(Integer hrResult21) {
-		this.hrResult21 = hrResult21;
+	public void setH21Result(Integer h21Result) {
+		this.h21Result = h21Result;
 	}
 
-	public Integer getHrResult22() {
-		return hrResult22;
+	public Integer getH22Result() {
+		return h22Result;
 	}
 
-	public void setHrResult22(Integer hrResult22) {
-		this.hrResult22 = hrResult22;
+	public void setH22Result(Integer h22Result) {
+		this.h22Result = h22Result;
 	}
 
-	public Integer getHrResult23() {
-		return hrResult23;
+	public Integer getH23Result() {
+		return h23Result;
 	}
 
-	public void setHrResult23(Integer hrResult23) {
-		this.hrResult23 = hrResult23;
+	public void setH23Result(Integer h23Result) {
+		this.h23Result = h23Result;
 	}
 
-	public Integer getHrResult24() {
-		return hrResult24;
+	public Integer getH24Result() {
+		return h24Result;
 	}
 
-	public void setHrResult24(Integer hrResult24) {
-		this.hrResult24 = hrResult24;
+	public void setH24Result(Integer h24Result) {
+		this.h24Result = h24Result;
 	}
 
 	public Integer getPlanQty() {
