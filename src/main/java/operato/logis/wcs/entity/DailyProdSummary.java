@@ -6,18 +6,19 @@ import xyz.elidom.dbist.annotation.Index;
 import xyz.elidom.dbist.annotation.PrimaryKey;
 import xyz.elidom.dbist.annotation.Table;
 
-@Table(name = "hourly_productivity", idStrategy = GenerationRule.UUID, uniqueFields="domainId,jobDate,stationCd,workerId,batchId", indexes = {
-	@Index(name = "ix_hourly_productivity_0", columnList = "domain_id,job_date,station_cd,worker_id,batch_id", unique = true),
-	@Index(name = "ix_hourly_productivity_1", columnList = "domain_id,job_date"),
-	@Index(name = "ix_hourly_productivity_2", columnList = "domain_id,year,month,day"),
-	@Index(name = "ix_hourly_productivity_3", columnList = "domain_id,year,month,day,area_cd,stage_cd,equip_type,equip_cd,job_type"),
-	@Index(name = "ix_hourly_productivity_4", columnList = "domain_id,job_date,area_cd,worker_id,equip_type,equip_cd,job_type")
+@Table(name = "daily_prod_summary", idStrategy = GenerationRule.UUID, uniqueFields="domainId,jobDate,stationCd,workerId,batchId", indexes = {
+	@Index(name = "ix_daily_prod_summary_0", columnList = "domain_id,job_date,station_cd,worker_id,batch_id", unique = true),
+	@Index(name = "ix_daily_prod_summary_1", columnList = "domain_id,job_date"),
+	@Index(name = "ix_daily_prod_summary_2", columnList = "domain_id,year,month,day"),
+	@Index(name = "ix_daily_prod_summary_3", columnList = "domain_id,year,month,day,area_cd,stage_cd,equip_type,equip_cd,job_type"),
+	@Index(name = "ix_daily_prod_summary_4", columnList = "domain_id,job_date,area_cd,worker_id,equip_type,equip_cd,job_type")
+
 })
-public class HourlyProductivity extends xyz.elidom.orm.entity.basic.ElidomStampHook {
+public class DailyProdSummary extends xyz.elidom.orm.entity.basic.ElidomStampHook {
 	/**
 	 * SerialVersion UID
 	 */
-	private static final long serialVersionUID = 839819688546808534L;
+	private static final long serialVersionUID = 425796427498795393L;
 
 	@PrimaryKey
 	@Column (name = "id", nullable = false, length = 40)
@@ -58,15 +59,6 @@ public class HourlyProductivity extends xyz.elidom.orm.entity.basic.ElidomStampH
 
 	@Column (name = "batch_id", nullable = false, length = 40)
 	private String batchId;
-	
-	@Column (name = "attr01", length = 40)
-	private String attr01;
-	
-	@Column (name = "attr02", length = 40)
-	private String attr02;
-	
-	@Column (name = "attr03", length = 40)
-	private String attr03;	
 
 	@Column (name = "hr_result_01", length = 2)
 	private String hrResult01;
@@ -151,6 +143,21 @@ public class HourlyProductivity extends xyz.elidom.orm.entity.basic.ElidomStampH
 
 	@Column (name = "uph", length = 19)
 	private Float uph;
+
+	@Column (name = "attr01", length = 40)
+	private String attr01;
+
+	@Column (name = "attr02", length = 40)
+	private String attr02;
+
+	@Column (name = "attr03", length = 40)
+	private String attr03;
+
+	@Column (name = "attr04", length = 40)
+	private String attr04;
+
+	@Column (name = "attr05", length = 40)
+	private String attr05;
   
 	public String getId() {
 		return id;
@@ -254,30 +261,6 @@ public class HourlyProductivity extends xyz.elidom.orm.entity.basic.ElidomStampH
 
 	public void setBatchId(String batchId) {
 		this.batchId = batchId;
-	}
-
-	public String getAttr01() {
-		return attr01;
-	}
-
-	public void setAttr01(String attr01) {
-		this.attr01 = attr01;
-	}
-
-	public String getAttr02() {
-		return attr02;
-	}
-
-	public void setAttr02(String attr02) {
-		this.attr02 = attr02;
-	}
-
-	public String getAttr03() {
-		return attr03;
-	}
-
-	public void setAttr03(String attr03) {
-		this.attr03 = attr03;
 	}
 
 	public String getHrResult01() {
@@ -502,5 +485,45 @@ public class HourlyProductivity extends xyz.elidom.orm.entity.basic.ElidomStampH
 
 	public void setUph(Float uph) {
 		this.uph = uph;
+	}
+
+	public String getAttr01() {
+		return attr01;
+	}
+
+	public void setAttr01(String attr01) {
+		this.attr01 = attr01;
+	}
+
+	public String getAttr02() {
+		return attr02;
+	}
+
+	public void setAttr02(String attr02) {
+		this.attr02 = attr02;
+	}
+
+	public String getAttr03() {
+		return attr03;
+	}
+
+	public void setAttr03(String attr03) {
+		this.attr03 = attr03;
+	}
+
+	public String getAttr04() {
+		return attr04;
+	}
+
+	public void setAttr04(String attr04) {
+		this.attr04 = attr04;
+	}
+
+	public String getAttr05() {
+		return attr05;
+	}
+
+	public void setAttr05(String attr05) {
+		this.attr05 = attr05;
 	}	
 }

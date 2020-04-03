@@ -11,7 +11,7 @@ import xyz.elidom.dbist.annotation.Table;
 	@Index(name = "ix_productivity_1", columnList = "domain_id,job_date,job_hour"),
 	@Index(name = "ix_productivity_2", columnList = "domain_id,job_date,area_cd,stage_cd,equip_type,equip_cd")
 })
-public class Productivity extends xyz.elidom.orm.entity.basic.ElidomStampHook {
+public class Productivity extends xyz.elidom.orm.entity.basic.DomainTimeStamp {
 	/**
 	 * SerialVersion UID
 	 */
@@ -47,15 +47,6 @@ public class Productivity extends xyz.elidom.orm.entity.basic.ElidomStampHook {
 
 	@Column (name = "worker_id", nullable = false, length = 32)
 	private String workerId;
-	
-	@Column (name = "attr01", length = 40)
-	private String attr01;
-	
-	@Column (name = "attr02", length = 40)
-	private String attr02;
-	
-	@Column (name = "attr03", length = 40)
-	private String attr03;
 
 	@Column (name = "job_hour", nullable = false, length = 2)
 	private String jobHour;
@@ -77,7 +68,22 @@ public class Productivity extends xyz.elidom.orm.entity.basic.ElidomStampHook {
 
 	@Column (name = "min_result_60", length = 12)
 	private Integer minResult60;
-  
+	
+	@Column (name = "attr01", length = 40)
+	private String attr01;
+	
+	@Column (name = "attr02", length = 40)
+	private String attr02;
+	
+	@Column (name = "attr03", length = 40)
+	private String attr03;
+	
+	@Column (name = "attr04", length = 40)
+	private String attr04;
+	
+	@Column (name = "attr05", length = 40)
+	private String attr05;
+	  
 	public String getId() {
 		return id;
 	}
@@ -158,30 +164,6 @@ public class Productivity extends xyz.elidom.orm.entity.basic.ElidomStampHook {
 		this.workerId = workerId;
 	}
 
-	public String getAttr01() {
-		return attr01;
-	}
-
-	public void setAttr01(String attr01) {
-		this.attr01 = attr01;
-	}
-
-	public String getAttr02() {
-		return attr02;
-	}
-
-	public void setAttr02(String attr02) {
-		this.attr02 = attr02;
-	}
-
-	public String getAttr03() {
-		return attr03;
-	}
-
-	public void setAttr03(String attr03) {
-		this.attr03 = attr03;
-	}
-
 	public String getJobHour() {
 		return jobHour;
 	}
@@ -236,5 +218,46 @@ public class Productivity extends xyz.elidom.orm.entity.basic.ElidomStampHook {
 
 	public void setMinResult60(Integer minResult60) {
 		this.minResult60 = minResult60;
-	}	
+	}
+
+	public String getAttr01() {
+		return attr01;
+	}
+
+	public void setAttr01(String attr01) {
+		this.attr01 = attr01;
+	}
+
+	public String getAttr02() {
+		return attr02;
+	}
+
+	public void setAttr02(String attr02) {
+		this.attr02 = attr02;
+	}
+
+	public String getAttr03() {
+		return attr03;
+	}
+
+	public void setAttr03(String attr03) {
+		this.attr03 = attr03;
+	}
+
+	public String getAttr04() {
+		return attr04;
+	}
+
+	public void setAttr04(String attr04) {
+		this.attr04 = attr04;
+	}
+
+	public String getAttr05() {
+		return attr05;
+	}
+
+	public void setAttr05(String attr05) {
+		this.attr05 = attr05;
+	}
+
 }

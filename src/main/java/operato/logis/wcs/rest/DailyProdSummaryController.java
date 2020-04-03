@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import operato.logis.wcs.entity.HourlyProductivity;
+import operato.logis.wcs.entity.DailyProdSummary;
 import xyz.elidom.dbist.dml.Page;
 import xyz.elidom.orm.system.annotation.service.ApiDesc;
 import xyz.elidom.orm.system.annotation.service.ServiceDesc;
@@ -22,13 +22,13 @@ import xyz.elidom.sys.system.service.AbstractRestService;
 @RestController
 @Transactional
 @ResponseStatus(HttpStatus.OK)
-@RequestMapping("/rest/hourly_productivity")
-@ServiceDesc(description = "HourlyProductivity Service API")
-public class HourlyProductivityController extends AbstractRestService {
+@RequestMapping("/rest/daily_prod_summary")
+@ServiceDesc(description = "DailyProdSummary Service API")
+public class DailyProdSummaryController extends AbstractRestService {
 
 	@Override
 	protected Class<?> entityClass() {
-		return HourlyProductivity.class;
+		return DailyProdSummary.class;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +43,7 @@ public class HourlyProductivityController extends AbstractRestService {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiDesc(description = "Find one by ID")
-	public HourlyProductivity findOne(@PathVariable("id") String id) {
+	public DailyProdSummary findOne(@PathVariable("id") String id) {
 		return this.getOne(this.entityClass(), id);
 	}
 
@@ -56,13 +56,13 @@ public class HourlyProductivityController extends AbstractRestService {
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiDesc(description = "Create")
-	public HourlyProductivity create(@RequestBody HourlyProductivity input) {
+	public DailyProdSummary create(@RequestBody DailyProdSummary input) {
 		return this.createOne(input);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiDesc(description = "Update")
-	public HourlyProductivity update(@PathVariable("id") String id, @RequestBody HourlyProductivity input) {
+	public DailyProdSummary update(@PathVariable("id") String id, @RequestBody DailyProdSummary input) {
 		return this.updateOne(input);
 	}
 
@@ -74,7 +74,7 @@ public class HourlyProductivityController extends AbstractRestService {
 
 	@RequestMapping(value = "/update_multiple", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiDesc(description = "Create, Update or Delete multiple at one time")
-	public Boolean multipleUpdate(@RequestBody List<HourlyProductivity> list) {
+	public Boolean multipleUpdate(@RequestBody List<DailyProdSummary> list) {
 		return this.cudMultipleData(this.entityClass(), list);
 	}
 
