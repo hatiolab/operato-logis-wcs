@@ -141,8 +141,17 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 	@Column (name = "left_qty", length = 12)
 	private Integer leftQty;
 
+	@Column (name = "progress_rate", length = 19)
+	private Float progressRate;
+	
 	@Column (name = "uph", length = 19)
 	private Float uph;
+	
+	@Column (name = "equip_runtime", length = 12)
+	private Integer equipRuntime;
+	
+	@Column (name = "equip_rate", length = 19)
+	private Float equipRate;
 
 	@Column (name = "attr01", length = 40)
 	private String attr01;
@@ -479,12 +488,36 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 		this.leftQty = leftQty;
 	}
 
+	public Float getProgressRate() {
+		return progressRate;
+	}
+
+	public void setProgressRate(Float progressRate) {
+		this.progressRate = progressRate;
+	}
+	
 	public Float getUph() {
 		return uph;
 	}
 
 	public void setUph(Float uph) {
 		this.uph = uph;
+	}	
+
+	public Integer getEquipRuntime() {
+		return equipRuntime;
+	}
+
+	public void setEquipRuntime(Integer equipRuntime) {
+		this.equipRuntime = equipRuntime;
+	}
+
+	public Float getEquipRate() {
+		return equipRate;
+	}
+
+	public void setEquipRate(Float equipRate) {
+		this.equipRate = equipRate;
 	}
 
 	public String getAttr01() {
