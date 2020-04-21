@@ -6,8 +6,8 @@ import xyz.elidom.dbist.annotation.Index;
 import xyz.elidom.dbist.annotation.PrimaryKey;
 import xyz.elidom.dbist.annotation.Table;
 
-@Table(name = "daily_prod_summary", idStrategy = GenerationRule.UUID, uniqueFields="domainId,jobDate,stationCd,workerId,batchId", indexes = {
-	@Index(name = "ix_daily_prod_summary_0", columnList = "domain_id,job_date,station_cd,worker_id,batch_id", unique = true),
+@Table(name = "daily_prod_summary", idStrategy = GenerationRule.UUID, uniqueFields="domainId,jobDate,stationCd,batchId", indexes = {
+	@Index(name = "ix_daily_prod_summary_0", columnList = "domain_id,job_date,station_cd,batch_id", unique = true),
 	@Index(name = "ix_daily_prod_summary_1", columnList = "domain_id,job_date"),
 	@Index(name = "ix_daily_prod_summary_2", columnList = "domain_id,year,month,day"),
 	@Index(name = "ix_daily_prod_summary_3", columnList = "domain_id,year,month,day,area_cd,stage_cd,equip_type,equip_cd,job_type"),
