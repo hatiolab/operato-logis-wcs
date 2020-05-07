@@ -36,6 +36,9 @@ public class Productivity extends xyz.elidom.orm.entity.basic.DomainTimeStampHoo
 	@Column (name = "stage_cd", length = 30)
 	private String stageCd;
 
+	@Column (name = "equip_group_cd", length = 30)
+	private String equipGroupCd;
+	
 	@Column (name = "equip_type", length = 20)
 	private String equipType;
 
@@ -130,6 +133,14 @@ public class Productivity extends xyz.elidom.orm.entity.basic.DomainTimeStampHoo
 
 	public void setStageCd(String stageCd) {
 		this.stageCd = stageCd;
+	}
+
+	public String getEquipGroupCd() {
+		return equipGroupCd;
+	}
+
+	public void setEquipGroupCd(String equipGroupCd) {
+		this.equipGroupCd = equipGroupCd;
 	}
 
 	public String getEquipType() {
