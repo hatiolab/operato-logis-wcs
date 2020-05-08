@@ -41,6 +41,9 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 
 	@Column (name = "stage_cd", length = 30)
 	private String stageCd;
+	
+	@Column (name = "equip_group_cd", length = 30)
+	private String equipGroupCd;
 
 	@Column (name = "equip_type", length = 20)
 	private String equipType;
@@ -131,6 +134,12 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 
 	@Column (name = "h24_result", length = 12)
 	private Integer h24Result;
+	
+	@Column (name = "input_workers", length = 12)
+	private Integer inputWorkers;
+	
+	@Column (name = "total_workers", length = 12)
+	private Integer totalWorkers;
 
 	@Column (name = "plan_qty", length = 12)
 	private Integer planQty;
@@ -223,6 +232,14 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 	public void setStageCd(String stageCd) {
 		this.stageCd = stageCd;
 	}
+	
+	public String getEquipGroupCd() {
+		return equipGroupCd;
+	}
+
+	public void setEquipGroupCd(String equipGroupCd) {
+		this.equipGroupCd = equipGroupCd;
+	}	
 
 	public String getEquipType() {
 		return equipType;
@@ -464,6 +481,22 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 		this.h24Result = h24Result;
 	}
 
+	public Integer getInputWorkers() {
+		return inputWorkers;
+	}
+
+	public void setInputWorkers(Integer inputWorkers) {
+		this.inputWorkers = inputWorkers;
+	}
+
+	public Integer getTotalWorkers() {
+		return totalWorkers;
+	}
+
+	public void setTotalWorkers(Integer totalWorkers) {
+		this.totalWorkers = totalWorkers;
+	}
+
 	public Integer getPlanQty() {
 		return planQty;
 	}
@@ -558,5 +591,6 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 
 	public void setAttr05(String attr05) {
 		this.attr05 = attr05;
-	}	
+	}
+
 }
