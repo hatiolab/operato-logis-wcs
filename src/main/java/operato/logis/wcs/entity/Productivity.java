@@ -45,14 +45,20 @@ public class Productivity extends xyz.elidom.orm.entity.basic.DomainTimeStampHoo
 	@Column (name = "equip_cd", length = 30)
 	private String equipCd;
 
-	@Column (name = "station_cd", nullable = false, length = 30)
+	@Column (name = "station_cd", length = 30)
 	private String stationCd;
 
-	@Column (name = "worker_id", nullable = false, length = 32)
+	@Column (name = "worker_id", length = 32)
 	private String workerId;
 
 	@Column (name = "job_hour", nullable = false, length = 2)
 	private String jobHour;
+	
+	@Column (name = "input_workers", length = 12)
+	private Integer inputWorkers;
+	
+	@Column (name = "total_workers", length = 12)
+	private Integer totalWorkers;
 
 	@Column (name = "m10_result", length = 12)
 	private Integer m10Result;
@@ -181,6 +187,22 @@ public class Productivity extends xyz.elidom.orm.entity.basic.DomainTimeStampHoo
 
 	public void setJobHour(String jobHour) {
 		this.jobHour = jobHour;
+	}
+
+	public Integer getInputWorkers() {
+		return inputWorkers;
+	}
+
+	public void setInputWorkers(Integer inputWorkers) {
+		this.inputWorkers = inputWorkers;
+	}
+
+	public Integer getTotalWorkers() {
+		return totalWorkers;
+	}
+
+	public void setTotalWorkers(Integer totalWorkers) {
+		this.totalWorkers = totalWorkers;
 	}
 
 	public Integer getM10Result() {

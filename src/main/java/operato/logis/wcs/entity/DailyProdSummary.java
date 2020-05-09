@@ -64,7 +64,7 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 	private String batchId;
 
 	@Column (name = "h01_result", length = 12)
-	private String h01Result;
+	private Integer h01Result;
 
 	@Column (name = "h02_result", length = 12)
 	private Integer h02Result;
@@ -157,7 +157,7 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 	private Float uph;
 	
 	@Column (name = "equip_runtime", length = 12)
-	private Integer equipRuntime;
+	private Float equipRuntime;
 	
 	@Column (name = "equip_rate", length = 19)
 	private Float equipRate;
@@ -289,11 +289,11 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 		this.batchId = batchId;
 	}
 	
-	public String getH01Result() {
+	public Integer getH01Result() {
 		return h01Result;
 	}
 
-	public void setH01Result(String h01Result) {
+	public void setH01Result(Integer h01Result) {
 		this.h01Result = h01Result;
 	}
 
@@ -537,11 +537,11 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 		this.uph = uph;
 	}	
 
-	public Integer getEquipRuntime() {
+	public Float getEquipRuntime() {
 		return equipRuntime;
 	}
 
-	public void setEquipRuntime(Integer equipRuntime) {
+	public void setEquipRuntime(Float equipRuntime) {
 		this.equipRuntime = equipRuntime;
 	}
 
