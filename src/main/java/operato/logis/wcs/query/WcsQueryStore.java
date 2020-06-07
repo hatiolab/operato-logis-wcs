@@ -40,7 +40,7 @@ public class WcsQueryStore extends AbstractQueryStore {
 	}
 	
 	/**
-	 *WMS I/F 테이블로 부터  주문수신 완료된 데이터 변경('Y')
+	 * WMS I/F 테이블로 부터  주문수신 완료된 데이터 변경('Y')
 	 * 
 	 * @return
 	 */
@@ -48,4 +48,13 @@ public class WcsQueryStore extends AbstractQueryStore {
 		return this.getQueryByPath("batch/WmsIfToReceiptUpdate");
 	}
 	
+	/**
+	 * 작업 배치의 설비 유휴 시간 조회 계산
+	 * 
+	 * @return
+	 */
+	public String getBatchEquipmentIdleTime() {
+		return this.getQueryByPath("batch/EquipmentIdleTime");
+	}
+
 }
