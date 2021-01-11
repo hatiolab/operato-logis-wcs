@@ -6,6 +6,11 @@ import xyz.elidom.dbist.annotation.Index;
 import xyz.elidom.dbist.annotation.PrimaryKey;
 import xyz.elidom.dbist.annotation.Table;
 
+/**
+ * 일별 실적 서머리
+ * 
+ * @author shortstop
+ */
 @Table(name = "daily_prod_summary", idStrategy = GenerationRule.UUID, uniqueFields="domainId,jobDate,stationCd,batchId", indexes = {
 	@Index(name = "ix_daily_prod_summary_0", columnList = "domain_id,job_date,station_cd,batch_id", unique = true),
 	@Index(name = "ix_daily_prod_summary_1", columnList = "domain_id,job_date"),
@@ -149,6 +154,9 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 
 	@Column (name = "left_qty", length = 12)
 	private Integer leftQty;
+	
+	@Column (name = "wrong_picking_qty", length = 12)
+	private Integer wrongPickingQty;
 
 	@Column (name = "progress_rate", length = 19)
 	private Float progressRate;
@@ -156,7 +164,7 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 	@Column (name = "uph", length = 19)
 	private Float uph;
 	
-	@Column (name = "equip_runtime", length = 12)
+	@Column (name = "equip_runtime", length = 19)
 	private Float equipRuntime;
 	
 	@Column (name = "equip_rate", length = 19)
@@ -176,7 +184,7 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 
 	@Column (name = "attr05", length = 40)
 	private String attr05;
-  
+
 	public String getId() {
 		return id;
 	}
@@ -519,6 +527,14 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 
 	public void setLeftQty(Integer leftQty) {
 		this.leftQty = leftQty;
+	}
+
+	public Integer getWrongPickingQty() {
+		return wrongPickingQty;
+	}
+
+	public void setWrongPickingQty(Integer wrongPickingQty) {
+		this.wrongPickingQty = wrongPickingQty;
 	}
 
 	public Float getProgressRate() {

@@ -13,7 +13,7 @@ SELECT *
                   AND AREA_CD = :areaCd 
                   AND STAGE_CD = :stageCd
                   AND STATUS in ( :status )
-                  AND ITEM_TYPE = 'order' 
+                  AND ITEM_TYPE = 'order'
                   AND JOB_TYPE = :jobType
-		   )
-   LIMIT 1 
+			 )
+   LIMIT 1

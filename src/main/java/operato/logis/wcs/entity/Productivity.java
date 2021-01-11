@@ -6,6 +6,11 @@ import xyz.elidom.dbist.annotation.Index;
 import xyz.elidom.dbist.annotation.PrimaryKey;
 import xyz.elidom.dbist.annotation.Table;
 
+/**
+ * 10분대 실적 서머리
+ * 
+ * @author shortstop
+ */
 @Table(name = "productivity", idStrategy = GenerationRule.UUID, uniqueFields="domainId,jobDate,batchId,stationCd,jobHour", indexes = {
 	@Index(name = "ix_productivity_0", columnList = "domain_id,job_date,batch_id,station_cd,job_hour", unique = true),
 	@Index(name = "ix_productivity_1", columnList = "domain_id,job_date,job_hour"),
