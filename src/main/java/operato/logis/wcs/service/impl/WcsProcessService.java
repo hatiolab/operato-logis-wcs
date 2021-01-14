@@ -183,9 +183,11 @@ public class WcsProcessService extends AbstractQueryService {
 		List<BatchReceiptItem> receiptItems = receipt.getItems();
 		
 		// 2 수신 아이템 데이터 생성
-		for(BatchReceiptItem item : receiptItems) {
-			item.setBatchReceiptId(receipt.getId());
-			receipt.addItem(item);
+		if(ValueUtil.isNotEmpty(receiptItems)) {
+			for(BatchReceiptItem item : receiptItems) {
+				item.setBatchReceiptId(receipt.getId());
+				receipt.addItem(item);
+			}
 		}
 		
 		// 3. 수신 아이템 설정 및 리턴

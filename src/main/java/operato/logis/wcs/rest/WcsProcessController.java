@@ -59,6 +59,13 @@ public class WcsProcessController {
 
 		Long domainId = Domain.currentDomainId();
 		WaveReceiveEvent event = new WaveReceiveEvent(domainId, EventConstants.EVENT_RECEIVE_TYPE_RECEIPT, SysEvent.EVENT_STEP_BEFORE, areaCd, stageCd, jobDate, comCd);
+		BatchReceipt receipt = new BatchReceipt();
+		receipt.setDomainId(domainId);
+		receipt.setAreaCd(areaCd);
+		receipt.setStageCd(stageCd);
+		receipt.setComCd(comCd);
+		receipt.setJobDate(jobDate);
+		event.setReceiptData(receipt);
 		this.wcsProcessService.handleReadyToReceiveWave(event);
 		return event.getReceiptData();
 	}
