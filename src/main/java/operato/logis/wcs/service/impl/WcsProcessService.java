@@ -113,11 +113,11 @@ public class WcsProcessService extends AbstractQueryService {
 	/**
 	 * Wave 대상 분류
 	 * 
-	 * @param mainBatch
+	 * @param wave
 	 * @param classifyCodes
 	 * @return
 	 */
-	public List<JobBatch> classifyWaves(JobBatch mainBatch, List<String> classifyCodes) {
+	public List<Wave> classifyWaves(Wave wave, List<String> classifyCodes) {
 		// TODO
 		return null;
 	}
@@ -125,11 +125,11 @@ public class WcsProcessService extends AbstractQueryService {
 	/**
 	 * Wave 분할 개수로 균등 분할
 	 * 
-	 * @param mainBatch
+	 * @param mainWave
 	 * @param splitCount
 	 * @return
 	 */
-	public List<JobBatch> splitWavesByEvenly(JobBatch mainBatch, int splitCount) {
+	public List<Wave> splitWavesByEvenly(Wave mainWave, int splitCount) {
 		// TODO
 		return null;
 	}
@@ -137,11 +137,11 @@ public class WcsProcessService extends AbstractQueryService {
 	/**
 	 * Wave 주문 수량으로 분할
 	 * 
-	 * @param mainBatch
+	 * @param mainWave
 	 * @param splitOrderQty
 	 * @return
 	 */
-	public List<JobBatch> splitWavesByOrderQty(JobBatch mainBatch, int splitOrderQty) {
+	public List<Wave> splitWavesByOrderQty(Wave mainWave, int splitOrderQty) {
 		// TODO
 		return null;
 	}
@@ -149,11 +149,11 @@ public class WcsProcessService extends AbstractQueryService {
 	/**
 	 * Wave 병합
 	 * 
-	 * @param mainBatch
-	 * @param targetBatch
+	 * @param mainWave
+	 * @param targetWave
 	 * @return
 	 */
-	public JobBatch mergeWave(JobBatch mainBatch, JobBatch targetBatch) {
+	public Wave mergeWave(Wave mainWave, Wave targetWave) {
 		// TODO
 		return null;
 	}
@@ -164,7 +164,7 @@ public class WcsProcessService extends AbstractQueryService {
 	 * @param batch
 	 * @return
 	 */
-	public JobBatch confirmWave(JobBatch batch) {
+	public Wave confirmWave(Wave batch) {
 		// TODO
 		return null;
 	}

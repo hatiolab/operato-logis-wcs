@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import operato.logis.wcs.entity.Wave;
 import operato.logis.wcs.event.WaveReceiveEvent;
 import operato.logis.wcs.service.impl.WcsProcessService;
 import xyz.anythings.base.entity.BatchReceipt;
@@ -115,13 +116,13 @@ public class WcsProcessController {
 	 */
 	@RequestMapping(value = "/classify_wave/{wave_id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiDesc(description = "Classify wave")
-	public List<JobBatch> classifyingWaves(@PathVariable("wave_id") String waveId, @RequestBody List<String> classifyCodes) {
+	public List<Wave> classifyingWaves(@PathVariable("wave_id") String waveId, @RequestBody List<String> classifyCodes) {
 
 		// 파라미터 대상 분류 옵션
 		Long domainId = Domain.currentDomainId();
-		JobBatch batch = AnyEntityUtil.findEntityBy(domainId, true, JobBatch.class, "domainId,id", domainId, waveId);
-		List<JobBatch> classifiedBatches = this.wcsProcessService.classifyWaves(batch, classifyCodes);
-		return classifiedBatches;
+		Wave wave = AnyEntityUtil.findEntityBy(domainId, true, Wave.class, "domainId,id", domainId, waveId);
+		List<Wave> classifiedWaves = this.wcsProcessService.classifyWaves(wave, classifyCodes);
+		return classifiedWaves;
 	}
 	
 	/**
@@ -134,15 +135,15 @@ public class WcsProcessController {
 	 */
 	@RequestMapping(value = "/split_wave/{wave_id}/{split_method}/{count}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiDesc(description = "Split wave")
-	public List<JobBatch> splitWave(@PathVariable("wave_id") String waveId, @PathVariable("split_method") String splitMethod, @PathVariable("count") Integer count) {
+	public List<Wave> splitWave(@PathVariable("wave_id") String waveId, @PathVariable("split_method") String splitMethod, @PathVariable("count") Integer count) {
 
 		Long domainId = Domain.currentDomainId();
-		JobBatch batch = AnyEntityUtil.findEntityBy(domainId, true, JobBatch.class, "domainId,id", domainId, waveId);
+		Wave wave = AnyEntityUtil.findEntityBy(domainId, true, Wave.class, "domainId,id", domainId, waveId);
 		
 		if(ValueUtil.isEqualIgnoreCase(splitMethod, "evenly")) {
-			return this.wcsProcessService.splitWavesByEvenly(batch, count);
+			return this.wcsProcessService.splitWavesByEvenly(wave, count);
 		} else {
-			return this.wcsProcessService.splitWavesByOrderQty(batch, count);
+			return this.wcsProcessService.splitWavesByOrderQty(wave, count);
 		}
 	}
 	
@@ -155,12 +156,12 @@ public class WcsProcessController {
 	 */
 	@RequestMapping(value = "/merge_wave/{main_wave_id}/{target_wave_id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiDesc(description = "Merge waves")
-	public JobBatch mergeWave(@PathVariable("main_wave_id") String mainWaveId, @PathVariable("target_wave_id") String targetWaveId) {
+	public Wave mergeWave(@PathVariable("main_wave_id") String mainWaveId, @PathVariable("target_wave_id") String targetWaveId) {
 
 		Long domainId = Domain.currentDomainId();
-		JobBatch mainBatch = AnyEntityUtil.findEntityBy(domainId, true, JobBatch.class, "domainId,id", domainId, mainWaveId);
-		JobBatch targetBatch = AnyEntityUtil.findEntityBy(domainId, true, JobBatch.class, "domainId,id", domainId, targetWaveId);
-		return this.wcsProcessService.mergeWave(mainBatch, targetBatch);
+		Wave mainWave = AnyEntityUtil.findEntityBy(domainId, true, Wave.class, "domainId,id", domainId, mainWaveId);
+		Wave targetWave = AnyEntityUtil.findEntityBy(domainId, true, Wave.class, "domainId,id", domainId, targetWaveId);
+		return this.wcsProcessService.mergeWave(mainWave, targetWave);
 	}
 
 	/**
@@ -171,11 +172,11 @@ public class WcsProcessController {
 	 */
 	@RequestMapping(value = "/confirm_wave/{wave_id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiDesc(description = "Confirm wave")
-	public JobBatch confirmWave(@PathVariable("wave_id") String waveId) {
+	public Wave confirmWave(@PathVariable("wave_id") String waveId) {
 
 		Long domainId = Domain.currentDomainId();
-		JobBatch batch = AnyEntityUtil.findEntityBy(domainId, true, JobBatch.class, "domainId,id", domainId, waveId);
-		return this.wcsProcessService.confirmWave(batch);
+		Wave wave = AnyEntityUtil.findEntityBy(domainId, true, Wave.class, "domainId,id", domainId, waveId);
+		return this.wcsProcessService.confirmWave(wave);
 	}
 
 }
