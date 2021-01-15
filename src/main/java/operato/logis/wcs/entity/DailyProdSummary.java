@@ -141,10 +141,10 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 	private Integer h24Result;
 	
 	@Column (name = "input_workers", length = 12)
-	private Integer inputWorkers;
+	private Float inputWorkers;
 	
 	@Column (name = "total_workers", length = 12)
-	private Integer totalWorkers;
+	private Float totalWorkers;
 
 	@Column (name = "plan_qty", length = 12)
 	private Integer planQty;
@@ -489,19 +489,19 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 		this.h24Result = h24Result;
 	}
 
-	public Integer getInputWorkers() {
+	public Float getInputWorkers() {
 		return inputWorkers;
 	}
 
-	public void setInputWorkers(Integer inputWorkers) {
+	public void setInputWorkers(Float inputWorkers) {
 		this.inputWorkers = inputWorkers;
 	}
 
-	public Integer getTotalWorkers() {
+	public Float getTotalWorkers() {
 		return totalWorkers;
 	}
 
-	public void setTotalWorkers(Integer totalWorkers) {
+	public void setTotalWorkers(Float totalWorkers) {
 		this.totalWorkers = totalWorkers;
 	}
 
