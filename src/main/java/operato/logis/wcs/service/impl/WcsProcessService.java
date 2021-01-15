@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import operato.logis.wcs.entity.Wave;
 import operato.logis.wcs.event.WaveReceiveEvent;
 import xyz.anythings.base.LogisConstants;
 import xyz.anythings.base.entity.BatchReceipt;
@@ -37,11 +38,11 @@ public class WcsProcessService extends AbstractQueryService {
 	/**
 	 * Wave 수신을 위한 정보 조회 커스텀 서비스
 	 */
-	public static final String READY_TO_RECEIVE_WAVE = "ready-to-receive-wave";
+	public static final String DIY_READY_TO_RECEIVE_WAVE = "diy-ready-to-receive-wave";
 	/**
 	 * Wave 수신 커스텀 서비스
 	 */
-	public static final String START_TO_RECEIVE_WAVE = "start-to-receive-wave";
+	public static final String DIY_START_TO_RECEIVE_WAVE = "diy-start-to-receive-wave";
 	/**
 	 * 커스텀 서비스
 	 */
@@ -176,17 +177,25 @@ public class WcsProcessService extends AbstractQueryService {
 	 * @param params
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private BatchReceipt readyToReceiveWave(BatchReceipt receipt, Object ... params) {
+		// 1. ID 설정
+		if(ValueUtil.isEmpty(receipt.getId())) {
+			receipt.setId(receipt.getDomainId() + LogisConstants.DASH + receipt.getJobDate());
+		}
+		
 		// 1. 파라미터 설정 및 커스텀 서비스 호출
 		Map<String, Object> parameters = ValueUtil.newMap("condition", receipt);
-		this.customService.doCustomService(receipt.getDomainId(), READY_TO_RECEIVE_WAVE, parameters);
+		Object resultObj = this.customService.doCustomService(receipt.getDomainId(), DIY_READY_TO_RECEIVE_WAVE, parameters);
+		if(ValueUtil.isNotEmpty(resultObj)) {
+			receipt.setItems((List<BatchReceiptItem>)resultObj);
+		}
 		List<BatchReceiptItem> receiptItems = receipt.getItems();
 		
 		// 2 수신 아이템 데이터 생성
 		if(ValueUtil.isNotEmpty(receiptItems)) {
 			for(BatchReceiptItem item : receiptItems) {
 				item.setBatchReceiptId(receipt.getId());
-				receipt.addItem(item);
 			}
 		}
 		
@@ -203,10 +212,13 @@ public class WcsProcessService extends AbstractQueryService {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	private BatchReceipt startToReceiveWave(BatchReceipt receipt, BatchReceiptItem item, Object ... params) {
+	private Wave startToReceiveWave(BatchReceipt receipt, BatchReceiptItem item, Object ... params) {
+		Wave wave = null;
+		
 		try {
-			Map<String, Object> parameters = ValueUtil.newMap("condition", item);
-			this.customService.doCustomService(receipt.getDomainId(), READY_TO_RECEIVE_WAVE, parameters);
+			Map<String, Object> parameters = ValueUtil.newMap("item", item);
+			wave = (Wave)this.customService.doCustomService(receipt.getDomainId(), DIY_START_TO_RECEIVE_WAVE, parameters);
+			item.setStatus(LogisConstants.COMMON_STATUS_FINISHED);
 			
 		} catch(Throwable th) {
 			String errMsg = th.getCause() != null ? th.getCause().getMessage() : th.getMessage();
@@ -216,7 +228,7 @@ public class WcsProcessService extends AbstractQueryService {
 			receipt.setStatus(LogisConstants.COMMON_STATUS_ERROR);
 		}
 
-		return receipt;
+		return wave;
 	}
 	
 	/**
