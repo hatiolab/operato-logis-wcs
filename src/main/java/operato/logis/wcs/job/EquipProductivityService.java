@@ -5,16 +5,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import operato.logis.wcs.entity.DailyProdSummary;
 import operato.logis.wcs.entity.Productivity;
 import xyz.anythings.base.entity.JobBatch;
 import xyz.anythings.sys.util.AnyDateUtil;
+import xyz.anythings.sys.util.AnyOrmUtil;
 import xyz.elidom.dbist.dml.Query;
 import xyz.elidom.orm.IQueryManager;
 import xyz.elidom.orm.OrmConstants;
@@ -24,13 +24,14 @@ import xyz.elidom.util.ValueUtil;
 @Component
 public class EquipProductivityService {
 	
-	private Logger logger = LoggerFactory.getLogger(EquipProductivityService.class);
+//	private Logger logger = LoggerFactory.getLogger(EquipProductivityService.class);
+	
+	private static final String PROD_LIKE_FORMAT= "yyyy-MM-dd HH:m";
 		
 	@Autowired
 	IQueryManager queryManager;
 	
-//	@Scheduled(cron="0 7/10 * * * ?")
-	@Scheduled(fixedDelay=30000)
+//	@Scheduled(fixedDelay=300000, initialDelay=30000)
 	@Transactional
 	public void summaryProductivity() {
 		// 1. 대상 작업 배치 조회 ( 상태만 진행중, 마감 인 것 들 )
@@ -41,36 +42,145 @@ public class EquipProductivityService {
 		
 		// 2. Loop 대상 작업 배치 
 		for (JobBatch jobBatch : runBatchList ) {
+			if(ValueUtil.isNotEqual("A1-B2B-21011311", jobBatch.getId())) {
+				continue;
+			}
+			
 			// 2.1. 대상 작업 배치 PRODUCTIVITY upsert
 			Date instructedAt = jobBatch.getInstructedAt();
 			List<Date> prodDateList = null;
 			
 			if(ValueUtil.isEqualIgnoreCase(jobBatch.getStatus(), JobBatch.STATUS_END)){
+				// 2.2. 마감된 작업배치는 마감 시간 기준 
 				prodDateList = this.getIntervalTenMin(instructedAt, jobBatch.getFinishedAt());
 			} else {
+				// 2.3. 진행중인 배치는 현재 시간 기준  
 				prodDateList = this.getIntervalTenMin(instructedAt);
 			}
 
 			Productivity prod = null;
+			// 2.4 전체 작업 시작 부터 10 분 단위 시간 Loop
 			for(Date currentDate : prodDateList) {
 				prod = this.getProductivity(prod, jobBatch, currentDate);
 				
+				// 2.4.1 생산성 데이터 생성 여부 판단 
 				if(this.isCreateProductivityData(prod, currentDate)) {
 					prod = this.createProductivity(jobBatch, currentDate);
 				}
 				
-				int baseMin = AnyDateUtil.minInt(currentDate) + 10;
+				// 2.4.2 기준 분 
+				int endMin = AnyDateUtil.minInt(currentDate) + 10;
 				
-				if(ValueUtil.isNotEmpty(ClassUtil.getFieldValue(prod, "m" + baseMin + "ResultStr"))){
+				// 2.4.3 기준 분에 데이터가 존재 하ㅏ면 기존에 집계된 것 
+				if(ValueUtil.isNotEmpty(ClassUtil.getFieldValue(prod, "m" + endMin + "ResultStr"))){
 					continue;
 				}
 				
-				prod = this.updateProductivity(prod, "m" + baseMin + "Result", 100);
+				// 2.4.4 집계 데이터 update 	
+				prod = this.updateProductivity(prod, jobBatch, currentDate, endMin);
+				
+				
+				// 2.4.5 대상 작업 배치 DAILY_PROD_SUMMARY upsert
+				this.upsertDailySummary(jobBatch, prod, endMin);
 			}
-
-			// 2.2. 대상 작업 배치 DAILY_PROD_SUMMARY	 upsert
-			
 		}
+	}
+	
+	/**
+	 * 일별 작업 서머리 정보 생성 
+	 * @param jobBatch
+	 * @param prod
+	 * @param targetMin
+	 */
+	private void upsertDailySummary(JobBatch jobBatch, Productivity prod, int targetMin) {
+		
+		// 1. 현재 시간이 완료 되지 않으면 skip
+		if(targetMin != 60) {
+			return;
+		}
+		
+		// 2. 데이터 생성 또는 업데이트 여부 판별  
+		DailyProdSummary summary = this.getDailyProdSummary(jobBatch, prod);
+		
+		if(ValueUtil.isEmpty(summary)){
+			// 2.1 데이터 생성 
+			this.createDailySummary(jobBatch, prod);
+		} else {
+			// 2.2 데이터 update 
+			this.updateDailySummary(jobBatch, prod, summary);
+		}
+	}
+	
+	private void createDailySummary(JobBatch jobBatch, Productivity prod) {
+		DailyProdSummary summary = new DailyProdSummary();
+		
+		summary.setDomainId(jobBatch.getDomainId());
+		summary.setJobDate(prod.getJobDate());
+		summary.setAreaCd(jobBatch.getAreaCd());
+		summary.setStageCd(jobBatch.getStageCd());
+		summary.setEquipGroupCd(jobBatch.getEquipGroupCd());
+		summary.setEquipType(jobBatch.getEquipType());
+		summary.setEquipCd(jobBatch.getEquipCd());
+		summary.setJobType(jobBatch.getJobType());
+		summary.setBatchId(jobBatch.getId());
+		
+		Date workDate = AnyDateUtil.parse(prod.getJobDate(), AnyDateUtil.getDateFormat());
+		
+		summary.setYear(AnyDateUtil.getYear(workDate));
+		summary.setMonth(AnyDateUtil.getMonth(workDate));
+		summary.setDay(AnyDateUtil.getDay(workDate));
+		
+		// TODO 
+		summary.setInputWorkers(10f);
+		summary.setTotalWorkers(10f);
+		summary.setEquipRate(9f);
+		summary.setUph(0f);
+		
+		summary.setPlanQty(jobBatch.getBatchPcs());
+		summary.setResultQty(jobBatch.getResultPcs());
+		summary.setWrongPickingQty(jobBatch.getWrongPickingQty());
+		summary.setLeftQty(jobBatch.getBatchPcs() - jobBatch.getResultPcs());
+		summary.setProgressRate(jobBatch.getProgressRate());
+		summary.setEquipRuntime(jobBatch.getEquipRuntime());
+		
+		String fieldName = String.format("h%02dResult", ValueUtil.toInteger(prod.getJobHour()) + 1);
+		ClassUtil.setFieldValue(summary, fieldName, this.sumMinProdResults(prod));
+		
+		this.queryManager.insert(summary);
+	}
+	
+	private void updateDailySummary(JobBatch jobBatch, Productivity prod, DailyProdSummary summary) {
+		// TODO 
+		summary.setInputWorkers(10f);
+		summary.setTotalWorkers(10f);
+		summary.setEquipRate(9f);
+		summary.setUph(0f);
+
+		summary.setPlanQty(jobBatch.getBatchPcs());
+		summary.setResultQty(jobBatch.getResultPcs());
+		summary.setWrongPickingQty(jobBatch.getWrongPickingQty());
+		summary.setLeftQty(jobBatch.getBatchPcs() - jobBatch.getResultPcs());
+		summary.setProgressRate(jobBatch.getProgressRate());
+		summary.setEquipRuntime(jobBatch.getEquipRuntime());
+		
+		String fieldName = String.format("h%02dResult", ValueUtil.toInteger(prod.getJobHour()) + 1);
+		ClassUtil.setFieldValue(summary, fieldName, this.sumMinProdResults(prod));
+		
+		this.queryManager.update(summary, fieldName, "inputWorkers","totalWorkers","equipRate","uph","planQty","resultQty","wrongPickingQty","leftQty","progressRate","equipRuntime","updatedAt");
+	}
+	
+	private DailyProdSummary getDailyProdSummary(JobBatch jobBatch, Productivity prod) {
+		Query condition = AnyOrmUtil.newConditionForExecution(jobBatch.getDomainId());
+		condition.addSelect("id");
+		condition.setFilter("batchId",jobBatch.getId());
+		condition.setFilter("jobDate",prod.getJobDate());
+		
+		return this.queryManager.selectByCondition(DailyProdSummary.class, condition);
+	}
+	
+	
+	private int sumMinProdResults(Productivity prod) {
+		return prod.getM10Result() + prod.getM20Result() + prod.getM30Result() + prod.getM40Result() + prod.getM50Result() + prod.getM60Result();
 	}
 	
 	/**
@@ -94,8 +204,8 @@ public class EquipProductivityService {
 		prod.setDomainId(jobBatch.getDomainId());
 		
 		// TODO
+		prod.setInputWorkers(10);
 		prod.setTotalWorkers(10);
-		prod.setStationCd("00");
 		
 		// insert 
 		return this.queryManager.insert(Productivity.class, prod);
@@ -108,9 +218,17 @@ public class EquipProductivityService {
 	 * @param fieldValue
 	 * @return
 	 */
-	private Productivity updateProductivity(Productivity prod, String fieldName, Object fieldValue) {
-		ClassUtil.setFieldValue(prod, fieldName, fieldValue);
-		this.queryManager.update(prod, fieldName, "updatedAt");
+	private Productivity updateProductivity(Productivity prod, JobBatch jobBatch, Date stDate, int endMin) {
+		
+		String updFieldName = "m" + endMin + "Result";
+		String prodLikeStr = AnyDateUtil.dateTimeStr(stDate, PROD_LIKE_FORMAT) + "%";
+		
+		String sql = "select sum(picked_qty) from job_instances where domain_id = :domainId and batch_id = :batchId and pick_ended_at like :prodLikeStr";
+		Map<String,Object> params = ValueUtil.newMap("domainId,batchId,prodLikeStr", jobBatch.getDomainId(), jobBatch.getId(), prodLikeStr);
+		Integer fieldValue = this.queryManager.selectBySql(sql, params, Integer.class);
+		
+		ClassUtil.setFieldValue(prod, updFieldName, fieldValue);
+		this.queryManager.update(prod, updFieldName, "updatedAt");
 		
 		return prod;
 	}
@@ -118,7 +236,7 @@ public class EquipProductivityService {
 	
 	
 	/**
-	 * 
+	 * 10분 생산성 데이터 insert or update 구분 
 	 * @param prod
 	 * @param compareDate
 	 * @return
