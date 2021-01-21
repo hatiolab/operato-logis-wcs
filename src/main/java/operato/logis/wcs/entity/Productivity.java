@@ -2,6 +2,7 @@ package operato.logis.wcs.entity;
 
 import xyz.elidom.dbist.annotation.Column;
 import xyz.elidom.dbist.annotation.GenerationRule;
+import xyz.elidom.dbist.annotation.Ignore;
 import xyz.elidom.dbist.annotation.Index;
 import xyz.elidom.dbist.annotation.PrimaryKey;
 import xyz.elidom.dbist.annotation.Table;
@@ -97,6 +98,20 @@ public class Productivity extends xyz.elidom.orm.entity.basic.DomainTimeStampHoo
 	
 	@Column (name = "attr05", length = 40)
 	private String attr05;
+	
+	@Ignore
+	private String m10ResultStr;
+	@Ignore
+	private String m20ResultStr;
+	@Ignore
+	private String m30ResultStr;
+	@Ignore
+	private String m40ResultStr;
+	@Ignore
+	private String m50ResultStr;
+	@Ignore
+	private String m60ResultStr;
+	
 	  
 	public String getId() {
 		return id;
@@ -296,6 +311,54 @@ public class Productivity extends xyz.elidom.orm.entity.basic.DomainTimeStampHoo
 
 	public void setAttr05(String attr05) {
 		this.attr05 = attr05;
+	}
+
+	public String getM10ResultStr() {
+		return m10ResultStr;
+	}
+
+	public void setM10ResultStr(String m10ResultStr) {
+		this.m10ResultStr = m10ResultStr;
+	}
+
+	public String getM20ResultStr() {
+		return m20ResultStr;
+	}
+
+	public void setM20ResultStr(String m20ResultStr) {
+		this.m20ResultStr = m20ResultStr;
+	}
+
+	public String getM30ResultStr() {
+		return m30ResultStr;
+	}
+
+	public void setM30ResultStr(String m30ResultStr) {
+		this.m30ResultStr = m30ResultStr;
+	}
+
+	public String getM40ResultStr() {
+		return m40ResultStr;
+	}
+
+	public void setM40ResultStr(String m40ResultStr) {
+		this.m40ResultStr = m40ResultStr;
+	}
+
+	public String getM50ResultStr() {
+		return m50ResultStr;
+	}
+
+	public void setM50ResultStr(String m50ResultStr) {
+		this.m50ResultStr = m50ResultStr;
+	}
+
+	public String getM60ResultStr() {
+		return m60ResultStr;
+	}
+
+	public void setM60ResultStr(String m60ResultStr) {
+		this.m60ResultStr = m60ResultStr;
 	}
 
 }
