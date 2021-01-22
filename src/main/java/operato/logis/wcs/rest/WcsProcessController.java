@@ -1,5 +1,6 @@
 package operato.logis.wcs.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import operato.logis.wcs.entity.Wave;
 import operato.logis.wcs.event.WaveReceiveEvent;
+import operato.logis.wcs.model.EquipCapaByWave;
 import operato.logis.wcs.service.impl.WcsProcessService;
 import xyz.anythings.base.entity.BatchReceipt;
+import xyz.anythings.base.entity.EquipGroup;
 import xyz.anythings.base.entity.JobBatch;
 import xyz.anythings.base.event.EventConstants;
 import xyz.anythings.sys.event.model.SysEvent;
 import xyz.anythings.sys.util.AnyEntityUtil;
+import xyz.elidom.orm.IQueryManager;
 import xyz.elidom.orm.system.annotation.service.ApiDesc;
 import xyz.elidom.orm.system.annotation.service.ServiceDesc;
 import xyz.elidom.sys.entity.Domain;
@@ -34,6 +38,8 @@ import xyz.elidom.util.ValueUtil;
 @ServiceDesc(description = "WCS Process Service API")
 public class WcsProcessController {
 
+	@Autowired
+	private IQueryManager queryMgr;
 	/**
 	 * WCS 서비스
 	 */
@@ -140,10 +146,10 @@ public class WcsProcessController {
 		Long domainId = Domain.currentDomainId();
 		Wave wave = AnyEntityUtil.findEntityBy(domainId, true, Wave.class, "domainId,id", domainId, waveId);
 		
-		if(ValueUtil.isEqualIgnoreCase(splitMethod, "evenly")) {
-			return this.wcsProcessService.splitWavesByEvenly(wave, count);
-		} else {
+		if(ValueUtil.isEqualIgnoreCase(splitMethod, "SPLIT_ORDERS")) {
 			return this.wcsProcessService.splitWavesByOrderQty(wave, count);
+		} else {
+			return this.wcsProcessService.splitWavesByEvenly(wave, count);
 		}
 	}
 	
@@ -162,6 +168,37 @@ public class WcsProcessController {
 		Wave mainWave = AnyEntityUtil.findEntityBy(domainId, true, Wave.class, "domainId,id", domainId, mainWaveId);
 		Wave targetWave = AnyEntityUtil.findEntityBy(domainId, true, Wave.class, "domainId,id", domainId, targetWaveId);
 		return this.wcsProcessService.mergeWave(mainWave, targetWave);
+	}
+
+	/**
+	 * Wave 당 설비 그룹별 Capa 정보 및 완료 예상 시간 조회
+	 * 
+	 * @param waveId
+	 * @return
+	 */
+	@RequestMapping(value = "/equip_capa/{wave_id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiDesc(description = "Confirm wave")
+	public List<EquipCapaByWave> equipCapaByWave(@PathVariable("wave_id") String waveId) {
+
+		Long domainId = Domain.currentDomainId();
+		//Wave wave = AnyEntityUtil.findEntityBy(domainId, true, Wave.class, "domainId,id", domainId, waveId);
+		List<EquipCapaByWave> capaList = new ArrayList<EquipCapaByWave>();
+		List<EquipGroup> equipGroupList = this.queryMgr.selectList(EquipGroup.class, ValueUtil.newMap("domainId", domainId));
+		
+		for(EquipGroup equipGroup : equipGroupList) {
+			EquipCapaByWave capa = new EquipCapaByWave();
+			capa.setEquipGroupCd(equipGroup.getEquipGroupCd());
+			capa.setEquipStatus("R");
+			capa.setInputWorkers(3);
+			capa.setEquipCellCapa(300.0f);
+			capa.setEquipCapa(500.0f);
+			capa.setRunningExpEndTime(175.0f);
+			capa.setWaveExpEndTime(275.0f);
+			capa.setTotalExpEndTime(450.0f);
+			capaList.add(capa);
+		}
+		
+		return capaList;
 	}
 
 	/**
