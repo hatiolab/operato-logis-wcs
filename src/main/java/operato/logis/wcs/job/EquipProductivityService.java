@@ -27,7 +27,7 @@ public class EquipProductivityService {
 	
 //	private Logger logger = LoggerFactory.getLogger(EquipProductivityService.class);
 	
-	private static final String PROD_LIKE_FORMAT= "yyyy-MM-dd HH:m";
+	private static final String PROD_LIKE_FORMAT= "yyyy-MM-dd HH:mm";
 	
 	private static final String PROD_10_DATE_FORMAT = "yyyy-MM-dd HH:mm:00" ;
 		
@@ -256,7 +256,8 @@ public class EquipProductivityService {
 	private Productivity updateProductivity(Productivity prod, JobBatch jobBatch, Date stDate, int endMin) {
 		
 		String updFieldName = "m" + endMin + "Result";
-		String prodLikeStr = AnyDateUtil.dateTimeStr(stDate, PROD_LIKE_FORMAT) + "%";
+		String prodLikeStr = AnyDateUtil.dateTimeStr(stDate, PROD_LIKE_FORMAT);
+		prodLikeStr = prodLikeStr.substring(0, prodLikeStr.length()-1) + "%";
 		
 		// 실적 조회 
 		String sql = "select sum(picked_qty) from job_instances where domain_id = :domainId and batch_id = :batchId and pick_ended_at like :prodLikeStr";
@@ -484,7 +485,7 @@ public class EquipProductivityService {
 		float total = ValueUtil.isEmpty(prodList) ? 0f : sumMinTotalWorker/hourCnt; // 시간당 작업 자수 
 		float input = ValueUtil.isEmpty(prodList) ? 0f : sumMinInputWorker/hourCnt;
 		float uph = total == 0 ? 0f : (cntPickResExists == 0 ? 0 : sumPickRes/cntPickResExists*6)/total; // (전체 피킹수 / 10분당 작업량 존재 수 * 6 = 시간당 피킹 수) / 시간당 작업자 수  
-		float rate = cntEquipOnTicks == 0 ? 0f : cntPickResExists/cntEquipOnTicks; // 10분당 작업량 존재 수 / 작업시작후 10분당 틱수 
+		float rate = cntEquipOnTicks == 0 ? 0f : cntPickResExists/cntEquipOnTicks *100; // 10분당 작업량 존재 수 / 작업시작후 10분당 틱수 
 		
 		return ValueUtil.newMap("total,input,uph,rate", total, input, uph, rate);	
 	}	
