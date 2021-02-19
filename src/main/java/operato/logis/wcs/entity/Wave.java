@@ -53,6 +53,9 @@ public class Wave extends xyz.elidom.orm.entity.basic.ElidomStampHook {
 
 	@Column (name = "status", length = 10)
 	private String status;
+	
+	@Column (name = "progress_rate", length = 12)
+	private Float progressRate;
 
 	public String getId() {
 		return id;
@@ -140,6 +143,14 @@ public class Wave extends xyz.elidom.orm.entity.basic.ElidomStampHook {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Float getProgressRate() {
+		return progressRate;
+	}
+
+	public void setProgressRate(Float progressRate) {
+		this.progressRate = progressRate;
 	}
 
 }
