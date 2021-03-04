@@ -52,6 +52,9 @@ public class OperatoLogisWcsInitializer {
 	public void refresh(ContextRefreshedEvent event) {
 		this.logger.info("Operato Logistics WCS module refreshing...");
 		
+		this.configSet.addConfig(this.module.getName(), this.module);
+		this.scanServices();
+		
 		this.logger.info("Operato Logistics WCS module refreshed!");
 	}
 	
@@ -59,8 +62,6 @@ public class OperatoLogisWcsInitializer {
     void ready(ApplicationReadyEvent event) {
 		this.logger.info("Operato Logistics WCS module initializing...");
 		
-		this.configSet.addConfig(this.module.getName(), this.module);
-		this.scanServices();
 		this.initQueryStores();
 		
 		this.logger.info("Operato Logistics WCS module initialized!");
