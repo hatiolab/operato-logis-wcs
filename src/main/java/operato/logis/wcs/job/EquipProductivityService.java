@@ -153,7 +153,7 @@ public class EquipProductivityService {
 		// 작업 일자
 		Date workDate = AnyDateUtil.parse(prod.getJobDate(), AnyDateUtil.getDateFormat());
 		summary.setYear(AnyDateUtil.getYear(workDate));
-		summary.setMonth(AnyDateUtil.getMonth(workDate));
+		summary.setMonth(AnyDateUtil.getMonth(workDate) + 1);
 		summary.setDay(AnyDateUtil.getDay(workDate));
 		
 		Map<String, Object> etcMap = this.calcDailySumUphAndEquipRate(jobBatch, summary);
@@ -217,8 +217,8 @@ public class EquipProductivityService {
 	private DailyProdSummary getDailyProdSummary(JobBatch jobBatch, Productivity prod) {
 		Query condition = AnyOrmUtil.newConditionForExecution(jobBatch.getDomainId());
 		condition.addSelect("id","jobDate");
-		condition.setFilter("batchId",jobBatch.getId());
-		condition.setFilter("jobDate",prod.getJobDate());
+		condition.setFilter("batchId", jobBatch.getId());
+		condition.setFilter("jobDate", prod.getJobDate());
 		return this.queryManager.selectByCondition(DailyProdSummary.class, condition);
 	}
 	
