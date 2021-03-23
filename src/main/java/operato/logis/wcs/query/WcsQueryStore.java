@@ -17,7 +17,7 @@ public class WcsQueryStore extends AbstractQueryStore {
 	public void initQueryStore(String databaseType) {
 		this.databaseType = databaseType;
 		this.basePath = "operato/logis/wcs/query/" + this.databaseType + SysConstants.SLASH;
-		this.defaultBasePath = "operato/logis/wcs/query/ansi/"; 
+		this.defaultBasePath = "operato/logis/wcs/query/ansi/";
 	}
 	
 	/**
@@ -55,6 +55,24 @@ public class WcsQueryStore extends AbstractQueryStore {
 	 */
 	public String getBatchEquipmentIdleTime() {
 		return this.getQueryByPath("batch/EquipmentIdleTime");
+	}
+	
+	/**
+	 * 배치별 10분대 실적 조회 쿼리
+	 * 
+	 * @return
+	 */
+	public String getFind10MinProductivityQuery() {
+		return this.getQueryByPath("summary/Find10MinProductivity");
+	}
+	
+	/**
+	 * 배치별 10분대 실적 조회 쿼리
+	 * 
+	 * @return
+	 */
+	public String getSearch10MinProductivityQuery() {
+		return this.getQueryByPath("summary/Search10MinProductivity");
 	}
 
 }
