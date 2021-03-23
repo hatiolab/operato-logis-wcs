@@ -199,7 +199,9 @@ public class EquipProductivityService {
 		summary.setEquipRuntime(batch.getEquipRuntime());
 		
 		// 시간 처리량 정보
-		String fieldName = String.format("h%02dResult", ValueUtil.toInteger(prod.getJobHour()));
+		int jobHour = ValueUtil.toInteger(prod.getJobHour());
+		String fieldName = String.format("h%02dResult", jobHour);
+		
 		ClassUtil.setFieldValue(summary, fieldName, this.sumMinProdResults(prod));
 		Map<String,Object> etcMap = this.calcDailySumUphAndEquipRate(batch, summary);
 		summary.setInputWorkers(ValueUtil.toFloat(etcMap.get("input")));
@@ -220,7 +222,6 @@ public class EquipProductivityService {
 	 */
 	private DailyProdSummary getDailyProdSummary(JobBatch batch, Productivity prod) {
 		Query condition = AnyOrmUtil.newConditionForExecution(batch.getDomainId());
-		//condition.addSelect("id", "jobDate");
 		condition.setFilter("batchId", batch.getId());
 		condition.setFilter("jobDate", prod.getJobDate());
 		return this.queryManager.selectByCondition(DailyProdSummary.class, condition);

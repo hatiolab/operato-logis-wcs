@@ -68,6 +68,9 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 	@Column (name = "batch_id", length = 40)
 	private String batchId;
 
+	@Column (name = "h00_result", length = 12)
+	private Integer h00Result;
+	
 	@Column (name = "h01_result", length = 12)
 	private Integer h01Result;
 
@@ -297,6 +300,14 @@ public class DailyProdSummary extends xyz.elidom.orm.entity.basic.DomainTimeStam
 		this.batchId = batchId;
 	}
 	
+	public Integer getH00Result() {
+		return h00Result;
+	}
+
+	public void setH00Result(Integer h00Result) {
+		this.h00Result = h00Result;
+	}
+
 	public Integer getH01Result() {
 		return h01Result;
 	}
